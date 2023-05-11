@@ -1,0 +1,10 @@
+{
+  "testCaseData": {
+    "MainPageURL": "https://vk.com/"
+  },
+  "vkLoginData": {
+    "login": "+375299830992",
+    "password": "PuV6j_.2&$m9h?UYY",
+    "token": "vk1.a.VPV5tMTZrpi_pEXAGXQ9De44kZ014BSm0NQTlO89WhaioGTs0XxoMgenxneOXYq4UdbSUAEJpuj4sUVzlBVyx9ngYMyVCGRjZDkwx3pZ-yRCpEwRtBuG8oqXrJk7BaCLB4kX6Kz09KOmiA1MZ_Vs8BdOGAEI53sSo5iqiJPVVUswfWUSMBhpktSss63E3ZlzYW5nXIarh8Dd2f0yIMiRyA"
+  }
+}
