@@ -1,6 +1,8 @@
 package utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -46,20 +48,21 @@ public class VkApiUtil {
     }
 
     public static Integer addPhotoToPostById(Integer post_id, String photoData) {
-        String owner_id = JsonPath.from(photoData).get("response.owner_id");
-        String photo_id = JsonPath.from(photoData).get("response.id");
-        String photoAttachments = String.format("photo%s_%s", owner_id, photo_id);
+        RestAssured.baseURI = BASE_URI;
+        RestAssured.basePath = wallEditMethod;
+        Integer owner_id = JsonPath.from(photoData).get("response[0].owner_id");
+        Integer photo_id = JsonPath.from(photoData).get("response[0].id");
+        String photoAttachments = String.format("photo%d_%d", owner_id, photo_id);
         return given()
-                .param("access_token", ACCESS_TOKEN)
-                .param("v", "5.131")
-                .param("owner_id", 793123173)
-                .param("post_id", post_id)
-                .param("attachments", photoAttachments)
+                .queryParam("access_token", ACCESS_TOKEN)
+                .queryParam("v", "5.131")
+                .queryParam("owner_id", 793123173)
+                .queryParam("post_id", post_id)
+                .queryParam("attachments", photoAttachments)
                 .post()
                 .then().log().all()
                 .extract()
                 .path("response.post_id");
-        //photo100172_166443618
     }
 
     public static Integer commentPostById(Integer post_id, String text) {
@@ -85,8 +88,6 @@ public class VkApiUtil {
     }
 
     public static String uploadPhoto(String URL, String path) {
-        System.out.println("UPLOAD PHOTO TO SERVER");
-        //RestAssured.baseURI = URL;
         return given()
                 .multiPart("photo", new File(path))
                 .post(URL)
@@ -97,11 +98,22 @@ public class VkApiUtil {
         System.out.println("SAVE UPLOADED PHOTO TO THE WALL");
         RestAssured.baseURI = BASE_URI;
         RestAssured.basePath = photosSaveWallPhoto;
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonPhotoData = null;
+        try {
+            jsonPhotoData = objectMapper.readTree(photoData);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         return given()
+                .accept(ContentType.JSON)
                 .contentType(ContentType.JSON)
-                .body(photoData)
-                .log().all()
+                .queryParam("access_token", ACCESS_TOKEN)
+                .queryParam("v", "5.131")
+                .queryParam("server", jsonPhotoData.get("server").asText())
+                .queryParam("photo", jsonPhotoData.get("photo").asText())
+                .queryParam("hash", jsonPhotoData.get("hash").asText())
                 .post()
-                .path("response.id");
+                .asString();
     }
 }
