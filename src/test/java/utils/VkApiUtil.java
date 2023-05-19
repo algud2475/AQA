@@ -42,8 +42,6 @@ public class VkApiUtil {
                 .param("post_id", post_id)
                 .param("message", text)
                 .post()
-                .then().log().all()
-                .extract()
                 .path("response.post_id");
     }
 
@@ -60,8 +58,6 @@ public class VkApiUtil {
                 .queryParam("post_id", post_id)
                 .queryParam("attachments", photoAttachments)
                 .post()
-                .then().log().all()
-                .extract()
                 .path("response.post_id");
     }
 
@@ -87,12 +83,23 @@ public class VkApiUtil {
                 .path("response.upload_url");
     }
 
+
     public static String uploadPhoto(String URL, String path) {
         return given()
                 .multiPart("photo", new File(path))
                 .post(URL)
                 .asString();
     }
+
+
+
+    public static JsonPath uploadPhoto2(String URL, String path) {
+        return given()
+                .multiPart("photo", new File(path))
+                .post(URL)
+                .jsonPath();
+    }
+
 
     public static String saveWallPhoto(String photoData) {
         System.out.println("SAVE UPLOADED PHOTO TO THE WALL");
@@ -110,9 +117,30 @@ public class VkApiUtil {
                 .contentType(ContentType.JSON)
                 .queryParam("access_token", ACCESS_TOKEN)
                 .queryParam("v", "5.131")
-                .queryParam("server", jsonPhotoData.get("server").asText())
-                .queryParam("photo", jsonPhotoData.get("photo").asText())
-                .queryParam("hash", jsonPhotoData.get("hash").asText())
+                //.queryParam("server", jsonPhotoData.get("server").asText())
+                //.queryParam("photo", jsonPhotoData.get("photo").asText())
+                //.queryParam("hash", jsonPhotoData.get("hash").asText())
+                .queryParam("server", jsonPhotoData.get("server"))
+                .queryParam("photo", jsonPhotoData.get("photo"))
+                .queryParam("hash", jsonPhotoData.get("hash"))
+                .post()
+                .asString();
+    }
+
+
+
+    public static String saveWallPhoto2(JsonPath photoData) {
+        System.out.println("SAVE UPLOADED PHOTO TO THE WALL");
+        RestAssured.baseURI = BASE_URI;
+        RestAssured.basePath = photosSaveWallPhoto;
+        return given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.JSON)
+                .queryParam("access_token", ACCESS_TOKEN)
+                .queryParam("v", "5.131")
+                .queryParam("server", photoData.getString("server"))
+                .queryParam("photo", photoData.getString("photo"))
+                .queryParam("hash", photoData.getString("hash"))
                 .post()
                 .asString();
     }
