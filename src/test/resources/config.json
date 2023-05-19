@@ -1,0 +1,8 @@
+{
+  "baseURI": "https://jsonplaceholder.typicode.com/",
+  "POSTS_PATH": "posts",
+  "POST_VALID_PATH": "posts/99",
+  "POST_INVALID_PATH": "posts/150",
+  "USERS_PATH": "users",
+  "USER_TEST_PATH": "users/5"
+}
