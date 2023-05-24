@@ -17,7 +17,7 @@ public class TestDB extends BaseTest {
             "name, DATE(start_time) AS date FROM test WHERE DATE(start_time) < '2016-10-13' ORDER BY project, name;";
     private static final String QUERY_TABLE_BROWSERS_COUNT = "SELECT browser, COUNT(id) AS tests_count FROM test WHERE browser IN ('chrome', 'firefox') GROUP BY browser;";
 
-    //@Test
+    @Test
     public static void testDb() {
         AqualityServices.getLogger().info("TASK 1 ACTION: Для каждого теста вывести минимальное время работы. Сортировать по проектам и по тестам внутри проектов");
         List<LinkedHashMap<String, Object>> tableMinWorking = DBUtil.sendQuery(QUERY_TABLE_MIN_WORKING);
@@ -31,16 +31,6 @@ public class TestDB extends BaseTest {
         AqualityServices.getLogger().info("TASK 4 ACTION: Вывести количество тестов, выполнявшихся на Firefox и на Chrome");
         List<LinkedHashMap<String, Object>> tableBrowsersCount = DBUtil.sendQuery(QUERY_TABLE_BROWSERS_COUNT);
         TableSteps.printResults(tableBrowsersCount);
-    }
-
-    @Test
-    public static void testJson() {
-        AqualityServices.getLogger().info("TASK 3 ACTION: Вывести тесты для каждого прoекта, которые выполнялись до 13 октября 2016. Сортировать по проектам и по тестам внутри проектов");
-        List<LinkedHashMap<String, Object>> tableFilterByDate = DBUtil.sendQuery(QUERY_TABLE_FILTER_BY_DATE);
-        TableSteps.convertToJson(tableFilterByDate);
-        AqualityServices.getLogger().info("TASK 4 ACTION: Вывести количество тестов, выполнявшихся на Firefox и на Chrome");
-        List<LinkedHashMap<String, Object>> tableBrowsersCount = DBUtil.sendQuery(QUERY_TABLE_BROWSERS_COUNT);
-        TableSteps.convertToJson(tableBrowsersCount);
     }
 }
 
