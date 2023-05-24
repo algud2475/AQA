@@ -26,3 +26,4 @@ replay_pid*
 # Other files
 .idea
 target
+dump.sql

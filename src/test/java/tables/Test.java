@@ -1,9 +1,13 @@
 package tables;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Timestamp;
+
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -14,8 +18,8 @@ public class Test {
     private String method_name;
     private int project_id;
     private int session_id;
-    private String start_time;
-    private String end_time;
+    private Timestamp start_time;
+    private Timestamp end_time;
     private String env;
     private String browser;
     private int author_id;

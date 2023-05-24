@@ -2,6 +2,7 @@ package tables;
 
 import lombok.*;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
