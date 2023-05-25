@@ -1,0 +1,7 @@
+{
+  "testWebsiteData": {
+    "NUMBER_OF_INTERESTS": "3",
+    "IMAGE_NAME": "./src/test/resources/TestImage.jpg",
+    "EXPECTED_TIMER_VALUE": "00:00:00"
+  }
+}
