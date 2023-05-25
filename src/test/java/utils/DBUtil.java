@@ -12,7 +12,7 @@ public class DBUtil {
     private static final int PORT = 3306;
     private static final String DATABASE_NAME = "union_reporting";
     private static final String USER = "root";
-    private static final String PASSWORD = "lmxdd14z";
+    private static final String PASSWORD = "";
     private static DataSource dataSource;
 
     public static void setupDataSource() {
