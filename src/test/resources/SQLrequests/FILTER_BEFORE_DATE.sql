@@ -1,0 +1,1 @@
+SELECT (SELECT name FROM project WHERE id = test.project_id) AS project, name, DATE(start_time) AS date FROM test WHERE DATE(start_time) < '%s' ORDER BY project, name;

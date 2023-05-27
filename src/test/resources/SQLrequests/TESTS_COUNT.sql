@@ -1,0 +1,1 @@
+SELECT (SELECT name FROM project WHERE id = test.project_id) AS project, COUNT(name) AS tests_count FROM test GROUP BY project ORDER BY project;

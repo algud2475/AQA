@@ -1,9 +1,6 @@
 package steps;
 
 import aquality.selenium.browser.AqualityServices;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
 
@@ -56,29 +53,5 @@ public class TableSteps {
             }
         }
         return size;
-    }
-
-    public static String convertToJsonString(List<LinkedHashMap<String, Object>> table) {
-        String json = null;
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            json = new ObjectMapper().writeValueAsString(table);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        return json;
-    }
-
-    public static JsonNode convertToJsonObject(List<LinkedHashMap<String, Object>> table) {
-        String json = null;
-        JsonNode node = null;
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            json = mapper.writeValueAsString(table);
-            node = mapper.readTree(json);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        return node;
     }
 }
